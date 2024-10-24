@@ -11,7 +11,7 @@ export default function Home() {
           <Link href="/todo">Todo page content</Link>
         </p>
 
-        <Button onClick={() => console.log('버튼이 클릭되었습니다!')}>Click me</Button>
+        <Button>Click me</Button>
       </div>
     </>
   )
