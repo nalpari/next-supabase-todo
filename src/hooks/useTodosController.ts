@@ -1,6 +1,6 @@
-import { getTodos } from '@/api/todo'
-import { Database } from '@/types/database.types'
 import { useEffect, useState } from 'react'
+import { createTodo, deleteTodo, getTodos, updateTodo } from '@/api/todo'
+import { Database } from '@/types/database.types'
 
 type TodoDto = Database['public']['Tables']['my-todo']['Row']
 
@@ -24,6 +24,24 @@ const useTodosController = () => {
     }
   }
 
+  const onCreateTodo = async (content: string) => {
+    console.log('onCreateTodo', content)
+    await createTodo(content)
+    onGetTodos()
+  }
+
+  const onUpdateTodo = async (id: number, content: string) => {
+    console.log('onUpdateTodo', id, content)
+    await updateTodo(id, content)
+    onGetTodos()
+  }
+
+  const onDeleteTodo = async (id: number) => {
+    console.log('onDeleteTodo', id)
+    await deleteTodo(id)
+    onGetTodos()
+  }
+
   useEffect(() => {
     onGetTodos()
   }, [])
@@ -31,6 +49,9 @@ const useTodosController = () => {
   return {
     loading,
     todos,
+    onCreateTodo,
+    onUpdateTodo,
+    onDeleteTodo,
   }
 }
 

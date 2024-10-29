@@ -1,31 +1,33 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
-import { Button } from '../ui/button'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Input } from '../ui/input'
-import { FaPencil, FaTrashCan } from 'react-icons/fa6'
-import useTodosController from '@/hooks/useTodosController'
-import Loading from '../common/Loading'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { FaPencil, FaTrashCan } from 'react-icons/fa6'
+import useTodosController from '@/hooks/useTodosController'
+
+import { Button } from '../ui/button'
+import { Input } from '../ui/input'
+import Loading from '../common/Loading'
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
+  content: z.string().min(2, {
+    message: 'Enter your todo.',
   }),
 })
 
 export default function TodoContainer() {
-  const { loading, todos } = useTodosController()
+  const { loading, todos, onCreateTodo, onUpdateTodo, onDeleteTodo } = useTodosController()
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: '',
+      content: '',
     },
   })
 
@@ -34,6 +36,7 @@ export default function TodoContainer() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
+    onCreateTodo(values.content)
   }
 
   return (
@@ -45,7 +48,7 @@ export default function TodoContainer() {
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
                 control={form.control}
-                name="username"
+                name="content"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>NEW TOOD</FormLabel>
@@ -69,7 +72,7 @@ export default function TodoContainer() {
                 <li key={todo.id} className="flex justify-between py-2">
                   <span className="font-bold">{todo.content}</span>
                   <div className="flex">
-                    <button className="mx-2">
+                    <button className="mx-2" onClick={() => onDeleteTodo(todo.id)}>
                       <FaTrashCan />
                     </button>
                     <button className="mx-2">
