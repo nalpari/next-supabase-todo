@@ -40,7 +40,7 @@ export default function Todo2Page() {
           placeholder="새로운 할 일"
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && addTodo()}
+          onKeyDown={(e) => e.key === 'Enter' && addTodo()}
         />
         <Button onClick={addTodo}>
           <Plus className="w-4 h-4 mr-2" />

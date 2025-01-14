@@ -1,3 +1,4 @@
+import BtnArea from '@/components/recoilTest/BtnArea'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
@@ -11,7 +12,12 @@ export default function Home() {
           <Link href="/todo">Todo page content</Link>
         </p>
 
-        <Button>Click me</Button>
+        <div className="py-2">
+          <Button>Click me</Button>
+        </div>
+        <div className="py-2">
+          <BtnArea />
+        </div>
       </div>
     </>
   )

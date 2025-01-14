@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
+import RecoilWrapper from './RecoilWrapper'
 import localFont from 'next/font/local'
+import Footer from '@/components/common/Footer'
 import './globals.css'
 
 const geistSans = localFont({
@@ -25,7 +27,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <RecoilWrapper>{children}</RecoilWrapper>
+        <Footer />
+      </body>
     </html>
   )
 }
